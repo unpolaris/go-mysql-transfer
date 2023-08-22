@@ -1,0 +1,36 @@
+# mysql配置
+addr: 192.168.110.61:3306
+user: root
+pass: READYWRMYDBDJKHF001
+charset : utf8
+slave_id: 1001 #slave ID
+flavor: mysql #mysql or mariadb,默认mysql
+
+#web admin相关配置
+# enable_web_admin: true #是否启用web admin，默认false
+# web_admin_port: 8060 #web监控端口,默认8060
+
+#目标类型
+# target: kafka # 支持redis,mongodb,elasticsearch,rocketmq,kafka,rabbitmq, script
+# #kafka连接配置
+# kafka_addrs: 192.168.110.61:9093 #kafka连接地址，多个用逗号分隔
+# kafka_sasl_user:  #kafka SASL_PLAINTEXT认证模式 用户名
+# kafka_sasl_password: #kafka SASL_PLAINTEXT认证模式 密码
+
+target: rocketmq # 支持redis,mongodb,elasticsearch,rocketmq,kafka,rabbitmq, script
+#rocketmq连接配置
+rocketmq_name_servers: http://192.168.110.61:9876 #rocketmq命名服务地址，多个用逗号分隔
+rocketmq_group_name: binlog #rocketmq group name,默认为空
+rocketmq_instance_name: binlog #rocketmq instance name,默认为空
+rocketmq_access_key: n8JOzxAXJ5k8QH4P #访问控制 accessKey,默认为空
+rocketmq_secret_key: 0fOF6d3q8CEhlKCi #访问控制 secretKey,默认为空
+
+#规则配置
+rule:
+  -
+    schema: user #数据库名称
+    table: user #表名称
+    order_by_column: id #排序
+    lua_file_path: luaScript/t_user.lua   #lua脚本文件
+    rocketmq_topic: binlog_rsync
+
